@@ -2,7 +2,9 @@ package testim.httpupload.domain;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -18,5 +20,19 @@ public class ItemRepository {
 
     public Item findById(Long id) {
         return store.get(id);
+    }
+
+    public List<Item> findAll() {
+        return new ArrayList<>(store.values());
+    }
+
+    public void update(Long itemId, Item updateParam) {
+        Item findItem = findById(itemId);
+        findItem.setItemName(updateParam.getItemName());
+        findItem.setPrice(updateParam.getPrice());
+        findItem.setQuantity(updateParam.getQuantity());
+        findItem.setItemType(updateParam.getItemType());
+        findItem.setItemType(updateParam.getItemType());
+        findItem.setImageFiles(updateParam.getImageFiles());
     }
 }

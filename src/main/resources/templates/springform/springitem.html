@@ -216,17 +216,77 @@
           <div class="card mb-0">
             <div class="card-body">
               <div class="row gx-5 bg-white">
+                <div class="card-body">
+                  <form class="form-horizontal">
+                    <div class="row gy-2 mb-4">
+                      <label class="col-sm-3 form-label" for="inputHorizontalElOne"  th:text="#{label.item.id}">상품 ID</label>
+                      <div class="col-sm-9">
+                        <input class="form-control" id="inputHorizontalElOne" th:value="${item.id}" readonly>
+                      </div>
+                    </div>
 
-                <div class="container">
+                    <div class="row gy-2 mb-4">
+                      <label class="col-sm-3 form-label" for="inputHorizontalElTwo" th:text="#{label.item.itemName}">상품명</label>
+                      <div class="col-sm-9">
+                        <input class="form-control" id="inputHorizontalElTwo" th:value="${item.itemName}" readonly>
+                      </div>
+                    </div>
 
-                  <div class="py-5 text-center">
-                    <h2>상품 조회</h2>
-                  </div>
+                    <div class="row gy-2 mb-4">
+                      <label class="col-sm-3 form-label" for="inputHorizontalElThree" th:text="#{label.item.price}">상품가격</label>
+                      <div class="col-sm-9">
+                        <input class="form-control" id="inputHorizontalElThree" th:value="${item.price}" readonly>
+                      </div>
+                    </div>
 
-                  상품명: <span th:text="${item.itemName}">상품명</span><br/>
-                  <img th:each="imageFile : ${item.imageFiles}" th:src="|/images/${imageFile.getStoreFileName()}|" width="300" height="300"/>
+                    <div class="row gy-2 mb-4">
+                      <label class="col-sm-3 form-label" for="inputHorizontalElFour"  th:text="#{label.item.quantity}">상품수량</label>
+                      <div class="col-sm-9">
+                        <input class="form-control" id="inputHorizontalElFour" th:value="${item.quantity}" readonly>
+                      </div>
+                    </div>
+
+                    <div class="row gy-2 mb-4">
+                      <label class="col-sm-3 form-label" for="inputHorizontalElFive" th:text="#{label.item.grade}">상품등급</label>
+                      <div class="col-sm-9">
+                        <select name="itemType" th:field="${item.itemType}" class="form-select" id="inputHorizontalElFive" disabled>
+                          <option value="">==상품 등급 선택==</option>
+                          <option th:each="itemType : ${itemTypes}" th:value="${itemType.code}"
+                                  th:text="${itemType.typeStatus}"> HIGHEST</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row gy-2 mb-4">
+                      <label class="col-sm-3 form-label" th:text="#{label.item.image}">상품이미지</label>
+                      <div class="col-sm-9">
+                        <img th:each="imageFile : ${item.imageFiles}" th:src="|/images/${imageFile.getStoreFileName()}|" width="300" height="300"/>
+                      </div>
+                    </div>
+
+                    <div class="border-bottom my-5 border-gray-200"></div>
+                    <div class="row">
+                      <div class="col">
+                        <button class="w-100 btn btn-primary btn-lg"
+                                onclick="location.href='editForm.html'"
+                                th:text="#{page.updateItem}"
+                                th:onclick="|location.href='@{/items/{itemId}/edit(itemId=${item.id})}'|"
+                                type="button">상품 수정</button>
+                      </div>
+                      <div class="col">
+                        <button class="w-100 btn btn-primary btn-lg" onclick="location.href='springitems.html'"
+                                th:text="#{page.items}"
+                                th:onclick="|location.href='@{/items}'|"
+                                type="button">목록으로</button>
+                      </div>
+                    </div>
+
+                  </form>
+
 
                 </div>
+
+
               </div>
             </div>
           </div>

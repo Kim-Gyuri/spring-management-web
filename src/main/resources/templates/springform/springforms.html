@@ -226,19 +226,59 @@
                             <div class="card-body">
                                 <div class="row gx-5 bg-white">
 
-                                    <form th:action method="post" enctype="multipart/form-data">
-                                        <ul>
-                                            <li>상품명 <input type="text" name="itemName"></li>
-                                            <li>이미지 파일들<input type="file" multiple="multiple" name="imageFiles" ></li>
-                                        </ul>
-                                        <input type="submit"/>
-                                    </form>
+                                    <form class="form-horizontal" th:action th:object="${item}" method="post" enctype="multipart/form-data">
 
+                                        <div th:if="${#fields.hasGlobalErrors()}">
+                                            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
+                                        </div>
 
+                                        <div class="row">
+                                            <label class="col-sm-3 form-label" for="itemName" th:text="#{label.item.itemName}">상품명</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" id="itemName" name="itemName" th:field="*{itemName}" th:errorclass="field-error" placeholder="이름을 입력하세요">
+                                                <div class="field-error" th:errors="*{itemName}">상품명 오류</div>
+                                            </div>
+                                        </div>
 
+                                        <div class="border-bottom my-5 border-gray-200"></div>
+                                        <div class="row">
+                                            <label class="col-sm-3 form-label" for="price" th:text="#{label.item.price}">가격</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" id="price" name="price" th:field="*{price}" th:errorclass="field-error" placeholder="가격을 입력하세요">
+                                                <div class="field-error" th:errors="*{price}">가격 오류</div>
+                                            </div>
+                                        </div>
 
+                                        <div class="border-bottom my-5 border-gray-200"></div>
+                                        <div class="row">
+                                            <label class="col-sm-3 form-label" for="quantity" th:text="#{label.item.quantity}">수량</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" id="quantity" name="quantity" th:field="*{quantity}" th:errorclass="field-error" placeholder="수량을 입력하세요">
+                                                <div class="field-error" th:errors="*{quantity}">수량 오류</div>
+                                            </div>
+                                        </div>
 
+                                        <div class="border-bottom my-5 border-gray-200"></div>
+                                        <div class="row">
+                                            <label class="col-sm-3 form-label" th:text="#{label.item.grade}">상품 등급</label>
+                                            <div class="col-sm-9">
+                                                <select type="text" name="itemType" th:field="*{itemType}" class="form-select">
+                                                    <option value="">==상품 등급 선택==</option>
+                                                    <option th:each="itemType : ${itemTypes}" th:value="${itemType.code}"
+                                                        th:text="${itemType.typeStatus}"> HIGHEST</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
+                                        <div class="border-bottom my-5 border-gray-200"></div>
+                                        <div class="row">
+                                            <label class="col-sm-3 form-label" for="formFile" th:text="#{label.item.image}">상품 이미지</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="formFile" type="file" multiple="multiple" name="imageFiles" th:field="*{imageFiles}">
+                                            </div>
+                                        </div>
+
+                                        <div class="border-bottom my-5 border-gray-200"></div>
                                         <div class="row">
                                             <div class="col">
                                                 <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.save}">상품 등록</button>
@@ -246,12 +286,13 @@
                                             <div class="col">
                                                 <button class="w-100 btn btn-secondary btn-lg"
                                                         onclick="location.href='springitems.html'"
-                                                        th:onclick="|location.href='@{/spring}'|"
+                                                        th:onclick="|location.href='@{/items}'|"
                                                         type="button" th:text="#{button.cancel}">취소</button>
                                             </div>
                                         </div>
 
                                     </form>
+
                                 </div>
                             </div>
                         </div>

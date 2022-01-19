@@ -226,86 +226,86 @@
                         <div class="card-body">
                             <div class="row gx-5 bg-white">
 
-                                <div class="container">
-
-                                    <form action="springitem.html" th:object="${item}" th:action method="post">
+                                    <form class="form-horizontal" action th:object="${item}" method="post" enctype="multipart/form-data">
 
                                         <div th:if="${#fields.hasGlobalErrors()}">
                                             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
                                         </div>
 
-                                        <div>
-                                            <label for="id" th:text="#{label.item.id}">상품 ID</label>
-                                            <input type="text" id="id" th:field="*{id}" class="form-control" readonly>
-                                        </div>
-                                        <div>
-                                            <label for="itemName" th:text="#{label.item.itemName}">상품명</label>
-                                            <input type="text" id="itemName" th:field="*{itemName}"
-                                                   th:errorclass="field-error" class="form-control" placeholder="이름을 입력하세요">
-                                            <div class="field-error" th:errors="*{itemName}">
-                                                상품명 오류
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label for="price" th:text="#{label.item.price}">가격</label>
-                                            <input type="text" id="price" th:field="*{price}"
-                                                   th:errorclass="field-error" class="form-control" placeholder="이름을 입력하세요">
-                                            <div class="field-error" th:errors="*{price}">
-                                                가격 오류
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label for="quantity" th:text="#{label.item.quantity}">수량</label>
-                                            <input type="text" id="quantity" th:field="*{quantity}"
-                                                   th:errorclass="field-error" class="form-control" placeholder="이름을 입력하세요">
-                                            <div class="field-error" th:errors="*{quantity}">
-                                                수량 오류
+                                        <div class="row">
+                                            <label class="col-sm-3 form-label" for="itemId" th:text="#{label.item.id}">상품 ID</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" id="itemId" name="itemId" th:field="*{id}" readonly>
                                             </div>
                                         </div>
 
+                                        <div class="border-bottom my-5 border-gray-200"></div>
+                                        <div class="row">
+                                            <label class="col-sm-3 form-label" for="itemName" th:text="#{label.item.itemName}">상품명</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"
+                                                       id="itemName" name="itemName" th:field="*{itemName}" th:errorclass="field-error" placeholder="이름을 입력하세요">
+                                                <div class="field-error" th:errors="*{itemName}">상품명 오류</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="border-bottom my-5 border-gray-200"></div>
+                                        <div class="row">
+                                            <label class="col-sm-3 form-label" for="price" th:text="#{label.item.price}">가격</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="price" th:field="*{price}" name="price" th:errorclass="field-error" class="form-control" placeholder="이름을 입력하세요">
+                                                <div class="field-error" th:errors="*{price}">가격 오류</div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="border-bottom my-5 border-gray-200"></div>
+                                        <div class="row">
+                                            <label class="col-sm-3 form-label" for="quantity" th:text="#{label.item.quantity}">수량</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="quantity" th:field="*{quantity}"
+                                                       th:errorclass="field-error" class="form-control" placeholder="이름을 입력하세요">
+                                                <div class="field-error" th:errors="*{quantity}">수량 오류</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="border-bottom my-5 border-gray-200"></div>
+                                        <div class="row">
+                                            <label class="col-sm-3 form-label" for="quantity" th:text="#{label.item.grade}">상품 등급</label>
+                                            <div class="col-sm-9">
+                                                <select type="text" name="itemType" th:field="*{itemType}" class="form-select">
+                                                    <option value="">==상품 등급 선택==</option>
+                                                    <option th:each="itemType : ${itemTypes}" th:value="${itemType.code}"
+                                                            th:text="${itemType.typeStatus}"> HIGHEST</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="border-bottom my-5 border-gray-200"></div>
+                                        <div class="row">
+                                            <label class="col-sm-3 form-label" for="formFile" th:text="#{label.item.image}">상품 이미지</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="formFile" type="file" multiple="multiple" name="imageFiles" th:field="*{imageFiles}">
+                                            </div>
+                                        </div>
                                         <hr class="my-4">
-                                        <!-- radio button -->
-                                        <div>
-                                            <div th:text="#{label.item.grade}">상품 등급</div>
-                                            <div th:each="type : ${itemTypes}" class="form-check form-check-inline">
-                                                <input type="radio" th:field="*{itemType}" th:value="${type.name()}" class="form-check-input">
-                                                <label th:for="${#ids.prev('itemType')}" th:text="${type.description}" class="form-check-label">
-                                                    BOOK
-                                                </label>
-                                            </div>
-                                        </div>
 
-                                        <!-- SELECT -->
-                                        <div>
-                                            <div th:text="#{label.item.field}">상품 종류</div>
-                                            <select th:field="*{selCode}" class="form-select">
-                                                <option value="">==분야 선택==</option>
-                                                <option th:each="selCode : ${selCodes}" th:value="${selCode.code}"
-                                                        th:text="${selCode.displayName}">분야보기</option>
-                                            </select>
-                                        </div>
-
-                                        <div>
-                                            <div th:text="#{label.item.image}">상품 이미지</div>
-                                            <input th:field="${item.imageFiles}"type="file" multiple="multiple" name="imageFiles">
-                                        </div>
-                                        <hr class="my-4">
-
+                                        <div class="border-bottom my-5 border-gray-200"></div>
                                         <div class="row">
                                             <div class="col">
                                                 <button class="w-100 btn btn-primary btn-lg" type="submit">저장</button>
                                             </div>
+
                                             <div class="col">
                                                 <button class="w-100 btn btn-secondary btn-lg"
                                                         onclick="location.href='springitem.html'"
-                                                        th:onclick="|location.href='@{/spring/{itemId}(itemId=${item.id})}'|"
+                                                        th:onclick="|location.href='@{/items/{itemId}(itemId=${item.id})}'|"
                                                         type="button">취소</button>
                                             </div>
                                         </div>
 
                                     </form>
-
-                                </div>
 
 
                             </div>

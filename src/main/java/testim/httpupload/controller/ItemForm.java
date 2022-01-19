@@ -9,5 +9,8 @@ import java.util.List;
 public class ItemForm {
     private Long itemId;
     private String itemName;
+    private Integer price;
+    private Integer quantity;
     private List<MultipartFile> imageFiles;
+    private String itemType;
 }
