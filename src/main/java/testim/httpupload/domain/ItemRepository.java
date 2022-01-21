@@ -1,6 +1,7 @@
 package testim.httpupload.domain;
 
 import org.springframework.stereotype.Repository;
+import testim.httpupload.domain.Item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
