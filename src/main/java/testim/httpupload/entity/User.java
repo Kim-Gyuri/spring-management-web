@@ -1,37 +1,48 @@
-package testim.httpupload.domain;
+package testim.httpupload.entity;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
 @Table(name="users")
+@Getter
 @NoArgsConstructor
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
-    private String email;
-
+    @NotEmpty
     private String password;
 
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     private String name;
 
     private String phone;
 
+    @Embedded
     private String address;
 
     private boolean active;
 
-    private String role = "ROLE_CUSTOMER";
-
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Cart cart;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders= new ArrayList<>();
 
     @Override
     public String toString() {
@@ -43,7 +54,6 @@ public class User implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", active='" + active +
-                ", role='" + role +'\'' +
                 '}';
     }
 

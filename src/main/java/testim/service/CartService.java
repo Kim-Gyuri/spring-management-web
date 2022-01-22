@@ -1,8 +1,8 @@
 package testim.service;
 
-import testim.httpupload.domain.Cart;
-import testim.httpupload.domain.ProductInOrder;
-import testim.httpupload.domain.User;
+import testim.httpupload.entity.Cart;
+import testim.httpupload.entity.OrderItem;
+import testim.httpupload.entity.User;
 
 import java.util.Collection;
 
@@ -10,7 +10,7 @@ public interface CartService {
 
     Cart getCart(User user);
 
-    void mergeLocalCart(Collection<ProductInOrder> productInOrders, User user);
+    void mergeLocalCart(Collection<OrderItem> orderItems, User user);
 
     void delete(String itemId, User user);
 

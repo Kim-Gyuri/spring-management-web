@@ -3,17 +3,15 @@ package testim.httpupload.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import testim.httpupload.domain.Cart;
-import testim.httpupload.domain.ProductInOrder;
-import testim.httpupload.domain.User;
+import testim.httpupload.entity.Cart;
+import testim.httpupload.entity.OrderItem;
+import testim.httpupload.entity.User;
 import testim.service.CartService;
-import testim.service.ProductInOrderService;
-import testim.service.ProductService;
+import testim.service.OrderItemService;
 import testim.service.UserService;
 
 import java.security.Principal;
 import java.util.Collection;
-import java.util.Collections;
 
 @RestController
 @RequestMapping("/cart")
@@ -29,7 +27,7 @@ public class CartController {
     ProductService productService;
 
     @Autowired
-    ProductInOrderService productInOrderService;
+    OrderItemService orderItemService;
 
 
     @GetMapping
@@ -39,32 +37,32 @@ public class CartController {
     }
 
     @PostMapping
-    public ResponseEntity<Cart> mergeCart(@RequestBody Collection<ProductInOrder> productInOrders, Principal principal) {
+    public ResponseEntity<Cart> mergeCart(@RequestBody Collection<OrderItem> orderItems, Principal principal) {
         User user = userService.findOne(principal.getName());
         try {
-            cartService.mergeLocalCart(productInOrders, user);
+            cartService.mergeLocalCart(orderItems, user);
         } catch (Exception e) {
             ResponseEntity.badRequest().body("Merge Cart Failed");
         }
         return ResponseEntity.ok(cartService.getCart(user));
     }
-
+/*
     @PostMapping("/add")
     public boolean addToCart(@RequestBody ItemForm form, Principal principal) {
-        var productInfo = productService.findOne(form.getProductId());
+        productService.findOne(form.getProductId())
         try {
-            mergeCart(Collections.singleton(new ProductInOrder(productInfo, form.getQuantity())), principal);
+            mergeCart(Collections.singleton(new OrderItem(productInfo, form.getQuantity())), principal);
         } catch (Exception e) {
             return false;
         }
         return true;
     }
-
+*/
     @PutMapping("/{itemId}")
-    public ProductInOrder modifyItem(@PathVariable("itemId") Long itemId, @RequestBody Integer quantity, Principal principal){
+    public OrderItem modifyItem(@PathVariable("itemId") Long itemId, @RequestBody Integer quantity, Principal principal){
         User user = userService.findOne(principal.getName());
-        productInOrderService.update(itemId, quantity, user);
-        return productInOrderService.findOne(itemId, user);
+        orderItemService.update(itemId, quantity, user);
+        return orderItemService.findOne(itemId, user);
     }
 
     @DeleteMapping("/{itemId}")

@@ -1,16 +1,12 @@
 package testim.service;
 
-import testim.httpupload.domain.User;
-
-import java.util.Collection;
+import testim.httpupload.entity.User;
 
 public interface UserService {
 
     User findOne(String email);
 
-    Collection<User> findByRole(String role);
-
-    User save(User user);
+    //Collection<User> findByRole(String role);
 
     User update(User user);
 }

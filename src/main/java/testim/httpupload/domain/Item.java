@@ -11,7 +11,7 @@ public class Item {
     private Long id;
     private String itemName;
     private Integer price;
- //private Integer quantity;
+    private Integer quantity;
     private List<UploadFile> imageFiles;
     private String itemType;
 
@@ -26,12 +26,4 @@ public class Item {
     }
 
 
-
-    private ProductInfo productInfo;
-    private Integer quantity;
-
-    public Item(ProductInfo productInfo) {
-        this.productInfo = productInfo;
-        this.quantity = quantity;
-    }
 }
