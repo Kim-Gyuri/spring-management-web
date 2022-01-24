@@ -1,11 +1,12 @@
 package testim.httpupload.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import testim.httpupload.domain.Address;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +23,16 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private Long id;
 
-    @NotEmpty
     private String password;
 
-    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String name;
 
     private String phone;
 
     @Embedded
-    private String address;
-
-    private boolean active;
+    private Address address;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Cart cart;
@@ -44,18 +40,14 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<Order> orders= new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email +"'\'" +
-                ", password='" + password + "'\'" +
-                ", name='" + name + "'\'" +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                ", active='" + active +
-                '}';
+    @Builder
+    public User(String name, Address address, List<Order> orders) {
+        this.name = name;
+        this.address = address;
+        this.orders = orders;
     }
+
+
 
 
 

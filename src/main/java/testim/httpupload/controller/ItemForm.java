@@ -13,6 +13,4 @@ public class ItemForm {
     private Integer quantity;
     private List<MultipartFile> imageFiles;
     private String itemType;
-
-    private Long productId;
 }

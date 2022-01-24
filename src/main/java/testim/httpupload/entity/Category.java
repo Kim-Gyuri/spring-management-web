@@ -16,10 +16,9 @@ public class Category {
 
     private String name;
 
-    private Integer categoryType;
-    /*
-    @OneToMany(mappedBy = "category")
-    private List<Item> items = new ArrayList<Item>();
+  //  private Integer categoryType;
 
- */
+    //@OneToMany(mappedBy = "category")
+  //  private List<Item> items = new ArrayList<Item>();
+
 }

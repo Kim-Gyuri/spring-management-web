@@ -13,8 +13,8 @@ import testim.service.UserService;
 import java.security.Principal;
 import java.util.Collection;
 
-@RestController
-@RequestMapping("/cart")
+//@RestController
+//@RequestMapping("/cart")
 public class CartController {
 
     @Autowired
@@ -23,8 +23,8 @@ public class CartController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    ProductService productService;
+    //@Autowired
+    //ProductService productService;
 
     @Autowired
     OrderItemService orderItemService;
@@ -64,7 +64,7 @@ public class CartController {
         orderItemService.update(itemId, quantity, user);
         return orderItemService.findOne(itemId, user);
     }
-
+/*
     @DeleteMapping("/{itemId}")
     public void deleteItem(@PathVariable("itemId") String itemId, Principal principal){
         User user = userService.findOne(principal.getName());
@@ -78,7 +78,7 @@ public class CartController {
         cartService.checkout(user);
         return ResponseEntity.ok(null);
     }
-
+*/
 
 
 

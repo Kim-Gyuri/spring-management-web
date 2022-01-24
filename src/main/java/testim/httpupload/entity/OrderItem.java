@@ -28,11 +28,41 @@ public class OrderItem {
     private Integer orderPrice;
     private Integer count;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Cart cart;
+
     //생
     @Builder
-    public OrderItem(Item item, Order order, Integer count) {
+    public OrderItem(Item item, Order order,Integer orderPrice, Integer count, Cart cart) {
         this.item = item;
         this.order = order;
+        this.orderPrice = orderPrice;
         this.count = count;
+        this.cart = cart;
     }
+
+    public static OrderItem createOrderItem(Item item, Integer orderPrice, Integer count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.builder().item(item);
+        orderItem.builder().orderPrice(orderPrice);
+        orderItem.builder().count(count);
+
+        item.removeStock(count);
+        return orderItem;
+    }
+/*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        OrderItem that = (OrderItem) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(item.getId(), that.item.getId()) &&
+                Objects.equals(item.getName(), that.item.getName()) &&
+                Objects.equals(item.getCategory(), that.item.getCategory()) &&
+                Objects.equals(item.getPrice(), that.item.getPrice());
+    }
+
+ */
 }

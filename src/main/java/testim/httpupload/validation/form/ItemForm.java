@@ -1,17 +1,18 @@
 package testim.httpupload.validation.form;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Data
 public class ItemForm {
 
-    @Min(value=1)
+    private Long itemId;
+    private String itemName;
+    private Integer price;
     private Integer quantity;
-
-    @NotEmpty
-    private String productId;
+    private List<MultipartFile> imageFiles;
+    private String itemType;
 
 }

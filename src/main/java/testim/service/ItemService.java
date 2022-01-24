@@ -1,13 +1,23 @@
 package testim.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import testim.httpupload.domain.Item;
+
+import testim.httpupload.entity.item.Item;
+
+import java.util.List;
 
 public interface ItemService {
 
+    void saveItem(Item item);
+
+    void updateItem(Long itemId, String name, int price, int stockQuantity);
+
+    List<Item> findItems();
+
     Item findOne(Long itemId);
 
+    void findById(Long id);
+
+    /*
     Page<Item> findUpAll(Pageable pageable);
 
     Page<Item> findAll(Pageable pageable);
@@ -27,4 +37,6 @@ public interface ItemService {
     Item save(Item item);
 
     void delete(Long itemId);
+
+     */
 }

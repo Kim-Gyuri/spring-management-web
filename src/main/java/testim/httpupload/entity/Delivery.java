@@ -1,5 +1,6 @@
 package testim.httpupload.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import testim.httpupload.domain.Address;
 import testim.httpupload.enums.DeliveryStatus;
@@ -22,4 +23,15 @@ public class Delivery {
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
+
+    @Builder
+    public Delivery(Order order, Address address, DeliveryStatus status) {
+        this.order = order;
+        this.address = address;
+        this.status = status;
+    }
+
+    public Delivery() {
+
+    }
 }
