@@ -268,6 +268,7 @@
                   <tr>
                     <th th:text="#{label.item.id}">ID</th>
                     <th th:text="#{label.item.itemName}">상품명</th>
+                    <th th:text="#{label.item.grade}">상품등급</th>
                     <th th:text="#{label.item.price}">가격</th>
                     <th th:text="#{label.item.quantity}">수량</th>
                   </tr>
@@ -276,6 +277,7 @@
                   <tr th:each="item : ${items}">
                     <td><a href="springitem.html" th:href="@{/items/{itemId}(itemId=${item.id})}" th:text="${item.id}">회원id</a></td>
                     <td><a href="springitem.html" th:href="@{|/items/${item.id}|}" th:text="${item.itemName}">상품명</a></td>
+                    <td th:text="${item.itemType}">HIGHEST</td>
                     <td th:text="${item.price}">10000</td>
                     <td th:text="${item.quantity}">10</td>
                   </tr>

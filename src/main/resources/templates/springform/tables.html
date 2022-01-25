@@ -151,11 +151,11 @@
             </div>
             <!-- Sidebar Navidation Menus--><span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Main</span>
             <ul class="list-unstyled py-4">
-                <li class="sidebar-item"><a class="sidebar-link" href="/items">
+                <li class="sidebar-item"><a class="sidebar-link" href="/items/">
                     <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                         <use xlink:href="#real-estate-1"> </use>
                     </svg>Home </a></li>
-                <li class="sidebar-item"><a class="sidebar-link" href="items/table">
+                <li class="sidebar-item active"><a class="sidebar-link" href="/items/table">
                     <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                         <use xlink:href="#portfolio-grid-1"> </use>
                     </svg>Tables </a></li>
@@ -163,7 +163,7 @@
                     <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                         <use xlink:href="#sales-up-1"> </use>
                     </svg>Charts </a></li>
-                <li class="sidebar-item active"><a class="sidebar-link" href="/items/new">
+                <li class="sidebar-item"><a class="sidebar-link" href="/items/new">
                     <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                         <use xlink:href="#survey-1"> </use>
                     </svg>Forms </a></li>
@@ -181,7 +181,8 @@
                     <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                         <use xlink:href="#disable-1"> </use>
                     </svg>Login page </a></li>
-            </ul><span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Extras</span>
+            </ul>
+            <span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Extras</span>
             <ul class="list-unstyled py-4">
                 <li class="sidebar-item"> <a class="sidebar-link" href="#">
                     <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
@@ -205,7 +206,7 @@
             <!-- Page Header-->
             <header class="bg-white shadow-sm px-4 py-3 z-index-20">
                 <div class="container-fluid px-0">
-                    <h2 class="mb-0 p-1">Forms</h2>
+                    <h2 class="mb-0 p-1">Tables</h2>
                 </div>
             </header>
             <!-- Breadcrumb-->
@@ -214,7 +215,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 py-3">
                             <li class="breadcrumb-item"><a class="fw-light" href="/items">Home</a></li>
-                            <li class="breadcrumb-item active fw-light" aria-current="page">Forms</li>
+                            <li class="breadcrumb-item active fw-light" aria-current="page">Tables</li>
                         </ol>
                     </nav>
                 </div>
@@ -228,30 +229,32 @@
                                 <h3 class="h4 mb-0" th:text="#{page.items}">전체 상품</h3>
                                 <hr class="my-4">
                                 <div>
-                                        <table class="table mb-0 table-striped table-hover">
-                                            <thead>
-                                            <tr>
-                                                <th th:text="#{label.item.id}">ID</th>
-                                                <th th:text="#{label.item.itemName}">상품명</th>
-                                                <th th:text="#{label.item.price}">가격</th>
-                                                <th th:text="#{label.item.quantity}">수량</th>
-                                                <th></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr th:each="item : ${items}">
-                                                <td><a href="springitem.html" th:href="@{/items/{itemId}(itemId=${item.id})}" th:text="${item.id}">회원id</a></td>
-                                                <td><a href="springitem.html" th:href="@{|/items/${item.id}|}" th:text="${item.itemName}">상품명</a></td>
-                                                <td th:text="${item.price}">10000</td>
-                                                <td th:text="${item.quantity}">10</td>
-                                                <td>
-                                                    <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}"
-                                                       class="btn btn-primary" role="button">수정</a>
-                                                    <a href="#" th:href="@{/items/{id}/delete (id=${item.id})}" class="btn btn-danger" role="button">삭제</a>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <table class="table mb-0 table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th th:text="#{label.item.id}">ID</th>
+                                            <th th:text="#{label.item.itemName}">상품명</th>
+                                            <th th:text="#{label.item.grade}">상품등급</th>
+                                            <th th:text="#{label.item.price}">가격</th>
+                                            <th th:text="#{label.item.quantity}">수량</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="item : ${items}">
+                                            <td><a href="springitem.html" th:href="@{/items/{itemId}(itemId=${item.id})}" th:text="${item.id}">회원id</a></td>
+                                            <td><a href="springitem.html" th:href="@{|/items/${item.id}|}" th:text="${item.itemName}">상품명</a></td>
+                                            <td th:text="${item.itemType}">HIGHEST</td>
+                                            <td th:text="${item.price}">10000</td>
+                                            <td th:text="${item.quantity}">10</td>
+                                            <td>
+                                                <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}"
+                                                   class="btn btn-primary" role="button">수정</a>
+                                                <a href="#" th:href="@{/items/{id}/delete (id=${item.id})}" class="btn btn-danger" role="button">삭제</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -259,21 +262,6 @@
                 </div>
             </section>
 
-
-            <!-- Page Footer-->
-            <footer class="position-absolute bottom-0 bg-darkBlue text-white text-center py-3 w-100 text-xs" id="footer">
-                <div class="container-fluid">
-                    <div class="row gy-2">
-                        <div class="col-sm-6 text-sm-start">
-                            <p class="mb-0">Your company &copy; 2017-2021</p>
-                        </div>
-                        <div class="col-sm-6 text-sm-end">
-                            <p class="mb-0">Design by <a href="https://bootstrapious.com/p/admin-template" class="text-white text-decoration-none">Bootstrapious</a></p>
-                            <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
 </div>
