@@ -10,11 +10,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import testim.httpupload.domain.Item;
 import testim.httpupload.domain.ItemType;
 import testim.httpupload.domain.UploadFile;
-import testim.httpupload.entity.item.Item;
 import testim.httpupload.file.FileStore;
 import testim.httpupload.repository.ItemRepository;
+import testim.httpupload.validation.form.ItemForm;
 import testim.httpupload.validation.form.ItemUpdateForm;
 
 import java.io.IOException;
@@ -30,7 +31,6 @@ public class ItemController {
     private final ItemRepository itemRepository;
     private final FileStore fileStore;
 
-
     @ModelAttribute("itemTypes")
     public List<ItemType> itemTypes() {
         List<ItemType> itemTypes = new ArrayList<>();
@@ -41,10 +41,17 @@ public class ItemController {
     }
 
     @GetMapping("/items") //home
-    public String items(Model model) {
+    public String isHome(Model model) {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
         return "springform/springitems";
+    }
+
+    @GetMapping("/items/table") //home
+    public String ListTable(Model model) {
+        List<Item> items = itemRepository.findAll();
+        model.addAttribute("items", items);
+        return "springform/tables";
     }
 
     @GetMapping("/items/new")
@@ -56,13 +63,12 @@ public class ItemController {
     public String saveItem(@ModelAttribute ItemForm form, RedirectAttributes redirectAttributes) throws IOException {
         List<UploadFile> uploadFiles = fileStore.storeFiles(form.getImageFiles());
 
-        Item item = Item.builder()
-                .itemName(form.getItemName())
-                .price(form.getPrice())
-                .quantity(form.getQuantity())
-                .imageFiles(uploadFiles)
-                .itemType(form.getItemType())
-                .build();
+        Item item = new Item();
+        item.setItemName(form.getItemName());
+        item.setPrice(form.getPrice());
+        item.setQuantity(form.getQuantity());
+        item.setImageFiles(uploadFiles);
+        item.setItemType(form.getItemType());
         itemRepository.save(item);
 
         redirectAttributes.addAttribute("itemId", item.getId());
@@ -97,17 +103,15 @@ public class ItemController {
 
         List<UploadFile> storeImageFiles = fileStore.storeFiles(form.getImageFiles());
 
+        Item itemParam = new Item();
+        itemParam.setItemName(form.getItemName());
+        itemParam.setQuantity(form.getQuantity());
+        itemParam.setPrice(form.getPrice());
+        itemParam.setItemType(form.getItemType());
+        itemParam.setImageFiles(storeImageFiles);
+        itemRepository.update(itemId, itemParam);
 
-        Item itemParam = Item.builder()
-                .itemName(form.getItemName())
-                .price(form.getPrice())
-                .quantity(form.getQuantity())
-                .imageFiles(storeImageFiles)
-                .itemType(form.getItemType())
-                .build();
-       itemRepository.update(itemId, itemParam);
-
-       return "redirect:/items/{itemId}";
+        return "redirect:/items/{itemId}";
     }
 
 
