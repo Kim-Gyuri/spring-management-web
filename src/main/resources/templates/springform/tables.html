@@ -220,16 +220,14 @@
                 </div>
             </div>
 
-            <section class="tables">
+            <section class="pb-0">
                 <div class="container-fluid">
-                    <div class="row gy-4">
-                        <div class="col-lg-6">
-                            <div class="card mb-0">
-                                <div class="card-header">
-                                    <h3 class="h4 mb-0">table header</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
+                    <div class="card mb-0">
+                        <div class="card-body">
+                            <div class="row gx-5 bg-white">
+                                <h3 class="h4 mb-0" th:text="#{page.items}">전체 상품</h3>
+                                <hr class="my-4">
+                                <div>
                                         <table class="table mb-0 table-striped table-hover">
                                             <thead>
                                             <tr>
@@ -237,6 +235,7 @@
                                                 <th th:text="#{label.item.itemName}">상품명</th>
                                                 <th th:text="#{label.item.price}">가격</th>
                                                 <th th:text="#{label.item.quantity}">수량</th>
+                                                <th></th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -245,10 +244,14 @@
                                                 <td><a href="springitem.html" th:href="@{|/items/${item.id}|}" th:text="${item.itemName}">상품명</a></td>
                                                 <td th:text="${item.price}">10000</td>
                                                 <td th:text="${item.quantity}">10</td>
+                                                <td>
+                                                    <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}"
+                                                       class="btn btn-primary" role="button">수정</a>
+                                                    <a href="#" th:href="@{/items/{id}/delete (id=${item.id})}" class="btn btn-danger" role="button">삭제</a>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
-                                    </div>
                                 </div>
                             </div>
                         </div>

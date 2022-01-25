@@ -36,4 +36,8 @@ public class ItemRepository {
         findItem.setItemType(updateParam.getItemType());
         findItem.setImageFiles(updateParam.getImageFiles());
     }
+
+    public void delete(Long id) {
+        store.remove(id);
+    }
 }
