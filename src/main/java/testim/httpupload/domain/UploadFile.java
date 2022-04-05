@@ -1,8 +1,12 @@
 package testim.httpupload.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import javax.persistence.Embeddable;
+
+@Embeddable
+@Getter @Setter
 public class UploadFile {
 
     private String uploadFileName;

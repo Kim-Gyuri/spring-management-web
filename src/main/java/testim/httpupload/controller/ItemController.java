@@ -2,8 +2,11 @@ package testim.httpupload.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +18,7 @@ import testim.httpupload.domain.ItemType;
 import testim.httpupload.domain.UploadFile;
 import testim.httpupload.file.FileStore;
 import testim.httpupload.repository.ItemRepository;
+import testim.httpupload.service.ItemService;
 import testim.httpupload.validation.form.ItemForm;
 import testim.httpupload.validation.form.ItemUpdateForm;
 
@@ -30,6 +34,15 @@ public class ItemController {
 
     private final ItemRepository itemRepository;
     private final FileStore fileStore;
+    private final ItemService itemService;
+
+    @Autowired
+    public ItemController(ItemService itemService, ItemRepository itemRepository, FileStore fileStore) {
+        this.itemRepository = itemRepository;
+        this.fileStore = fileStore;
+        this.itemService = itemService;
+    }
+
 
     @ModelAttribute("itemTypes")
     public List<ItemType> itemTypes() {
@@ -40,14 +53,25 @@ public class ItemController {
         return itemTypes;
     }
 
+    @GetMapping("/items")
+    public String isHome(Pageable pageable, Model model) {
+        Page<Item> itemList = itemService.findBoardList(pageable);
+        itemList.stream().forEach(e -> e.getItemName());
+        model.addAttribute("itemList", itemList);
+        return "springform/springitems";
+
+    }
+
+    /*
     @GetMapping("/items") //home
     public String isHome(Model model) {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
         return "springform/springitems";
     }
+     */
 
-    @GetMapping("/items/table") //home
+    @GetMapping("/items/table")
     public String ListTable(Model model) {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
