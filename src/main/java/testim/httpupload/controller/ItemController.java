@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,7 +50,7 @@ public class ItemController {
         itemTypes.add(new ItemType("LOWER", "중"));
         return itemTypes;
     }
-
+/*
     @GetMapping("/items")
     public String isHome(Pageable pageable, Model model) {
         Page<Item> itemList = itemService.findBoardList(pageable);
@@ -61,15 +59,15 @@ public class ItemController {
         return "springform/springitems";
 
     }
+*/
 
-    /*
     @GetMapping("/items") //home
     public String isHome(Model model) {
         List<Item> items = itemRepository.findAll();
-        model.addAttribute("items", items);
+        model.addAttribute("itemList", items);
         return "springform/springitems";
     }
-     */
+
 
     @GetMapping("/items/table")
     public String ListTable(Model model) {
