@@ -15,7 +15,6 @@ import testim.httpupload.domain.Item;
 import testim.httpupload.domain.ItemType;
 import testim.httpupload.domain.UploadFile;
 import testim.httpupload.file.FileStore;
-import testim.httpupload.repository.ItemRepository;
 import testim.httpupload.service.ItemService;
 import testim.httpupload.validation.form.ItemForm;
 import testim.httpupload.validation.form.ItemUpdateForm;
@@ -30,17 +29,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemController {
 
-    private final ItemRepository itemRepository;
-    private final FileStore fileStore;
-    private final ItemService itemService;
+    @Autowired
+    ItemService itemService;
 
     @Autowired
-    public ItemController(ItemService itemService, ItemRepository itemRepository, FileStore fileStore) {
-        this.itemRepository = itemRepository;
-        this.fileStore = fileStore;
-        this.itemService = itemService;
-    }
-
+    FileStore fileStore;
 
     @ModelAttribute("itemTypes")
     public List<ItemType> itemTypes() {
@@ -63,7 +56,7 @@ public class ItemController {
 
     @GetMapping("/items") //home
     public String isHome(Model model) {
-        List<Item> items = itemRepository.findAll();
+        List<Item> items = itemService.findAll();
         model.addAttribute("itemList", items);
         return "springform/springitems";
     }
@@ -71,7 +64,7 @@ public class ItemController {
 
     @GetMapping("/items/table")
     public String ListTable(Model model) {
-        List<Item> items = itemRepository.findAll();
+        List<Item> items = itemService.findAll();
         model.addAttribute("items", items);
         return "springform/tables";
     }
@@ -91,7 +84,7 @@ public class ItemController {
         item.setQuantity(form.getQuantity());
         item.setImageFiles(uploadFiles);
         item.setItemType(form.getItemType());
-        itemRepository.save(item);
+        itemService.save(item);
 
         redirectAttributes.addAttribute("itemId", item.getId());
         redirectAttributes.addAttribute("status", true);
@@ -102,7 +95,7 @@ public class ItemController {
 
     @GetMapping("/items/{id}")
     public String items(@PathVariable Long id, Model model) {
-        Item item = itemRepository.findById(id);
+        Item item = itemService.findById(id);
         model.addAttribute("item", item);
         return "springform/springitem";
     }
@@ -115,7 +108,7 @@ public class ItemController {
 
     @GetMapping("/items/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {
-        Item item = itemRepository.findById(itemId);
+        Item item = itemService.findById(itemId);
         model.addAttribute("item", item);
         return "springform/editForm";
     }
@@ -131,14 +124,14 @@ public class ItemController {
         itemParam.setPrice(form.getPrice());
         itemParam.setItemType(form.getItemType());
         itemParam.setImageFiles(storeImageFiles);
-        itemRepository.update(itemId, itemParam);
+        itemService.update(itemId, itemParam);
 
         return "redirect:/items/{itemId}";
     }
 
     @GetMapping("items/{itemId}/delete")
     public String deleteItem(@PathVariable Long itemId) {
-        itemRepository.delete(itemId);
+        itemService.delete(itemId);
 
         return "redirect:/items";
     }
