@@ -12,9 +12,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import testim.httpupload.domain.Item;
+import testim.httpupload.domain.ItemCategory;
 import testim.httpupload.domain.ItemType;
 import testim.httpupload.domain.UploadFile;
 import testim.httpupload.file.FileStore;
+import testim.httpupload.service.CategoryService;
 import testim.httpupload.service.ItemService;
 import testim.httpupload.validation.form.ItemForm;
 import testim.httpupload.validation.form.ItemUpdateForm;
@@ -31,6 +33,9 @@ public class ItemController {
 
     @Autowired
     ItemService itemService;
+
+    @Autowired
+    CategoryService categoryService;
 
     @Autowired
     FileStore fileStore;
@@ -57,7 +62,9 @@ public class ItemController {
     @GetMapping("/items") //home
     public String isHome(Model model) {
         List<Item> items = itemService.findAll();
+        List<ItemCategory> categories = categoryService.findAll();
         model.addAttribute("itemList", items);
+        model.addAttribute("categoryList", categories);
         return "springform/springitems";
     }
 

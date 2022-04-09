@@ -8,9 +8,7 @@ public interface CategoryService {
 
     List<ItemCategory> findAll();
 
-    ItemCategory findByCategoryType(Integer categoryType);
-
-    List<ItemCategory> findByCategoryTypeIn(List<Integer> categoryTypeList);
+    ItemCategory findById(Long categoryId);
 
     ItemCategory save(ItemCategory itemCategory);
 

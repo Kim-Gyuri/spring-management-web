@@ -1,44 +1,38 @@
 package testim.httpupload.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import testim.httpupload.domain.ItemCategory;
-import testim.httpupload.enums.ResultEnum;
-import testim.httpupload.exception.MyException;
-import testim.httpupload.repository.ItemCategoryRepository;
 import testim.httpupload.service.CategoryService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
-    ItemCategoryRepository itemCategoryRepository;
+
+    private final Map<Long, ItemCategory> store = new HashMap<>();
+    private long sequence = 0L;
+
 
     @Override
     public List<ItemCategory> findAll() {
-        List<ItemCategory> res = itemCategoryRepository.findAllByOrderByCategoryType();
-        return res;
+        return new ArrayList<>(store.values());
     }
 
-    @Override
-    public ItemCategory findByCategoryType(Integer categoryType) {
-        ItemCategory res = itemCategoryRepository.findByCategoryType(categoryType);
-        if (res == null) throw new MyException(ResultEnum.CATEGORY_NOT_FOUND);
-        return res;
-    }
 
     @Override
-    public List<ItemCategory> findByCategoryTypeIn(List<Integer> categoryTypeList) {
-        List<ItemCategory> res = itemCategoryRepository.findByCategoryTypeInOrderByCategoryTypeAsc(categoryTypeList);
-        return res;
+    public ItemCategory findById(Long categoryId) {
+        return store.get(categoryId);
     }
 
+
     @Override
-    @Transactional
     public ItemCategory save(ItemCategory itemCategory) {
-        return itemCategoryRepository.save(itemCategory);
+        itemCategory.setCategoryId(++sequence);
+        store.put(itemCategory.getCategoryId(), itemCategory);
+        return itemCategory;
     }
 }

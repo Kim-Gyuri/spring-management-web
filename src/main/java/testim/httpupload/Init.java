@@ -4,7 +4,9 @@ package testim.httpupload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import testim.httpupload.domain.Item;
-import testim.httpupload.repository.ItemRepository;
+import testim.httpupload.domain.ItemCategory;
+import testim.httpupload.service.CategoryService;
+import testim.httpupload.service.ItemService;
 
 import javax.annotation.PostConstruct;
 
@@ -12,7 +14,9 @@ import javax.annotation.PostConstruct;
 @RequiredArgsConstructor
 class TestDataInitDb {
 
-    private final ItemRepository itemRepository;
+    private final ItemService itemService;
+
+    private final CategoryService categoryService;
 
 
     /**
@@ -20,8 +24,11 @@ class TestDataInitDb {
      */
     @PostConstruct
     public void init() {
-        itemRepository.save(new Item("itemA", 10000, 10,null, "HIGHEST"));
-        itemRepository.save(new Item("itemB", 20000, 20,null, "HIGHEST"));
+        itemService.save(new Item("itemA", 10000, 10,null, "HIGHEST"));
+        itemService.save(new Item("itemB", 20000, 20,null, "HIGHEST"));
+
+        categoryService.save(new ItemCategory("book"));
+        categoryService.save(new ItemCategory("music"));
 
 
     }
