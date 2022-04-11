@@ -10,6 +10,7 @@ public interface CategoryService {
 
     ItemCategory findById(Long categoryId);
 
+
     ItemCategory save(ItemCategory itemCategory);
 
 }

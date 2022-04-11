@@ -62,9 +62,10 @@ public class ItemController {
     @GetMapping("/items") //home
     public String isHome(Model model) {
         List<Item> items = itemService.findAll();
-        List<ItemCategory> categories = categoryService.findAll();
+        List<ItemCategory> categoryList = categoryService.findAll();
         model.addAttribute("itemList", items);
-        model.addAttribute("categoryList", categories);
+        model.addAttribute("categoryList", categoryList);
+        log.info("get! hie");
         return "springform/springitems";
     }
 
@@ -75,6 +76,8 @@ public class ItemController {
         model.addAttribute("items", items);
         return "springform/tables";
     }
+
+
 
     @GetMapping("/items/new")
     public String newItem(@ModelAttribute Item item) {

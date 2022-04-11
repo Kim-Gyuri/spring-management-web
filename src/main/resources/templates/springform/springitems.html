@@ -48,8 +48,11 @@
               </svg></a></li>
             <!-- category -->
             <tr th:each="category : ${categoryList}">
-              <li class="nav-item"><a class="nav-link text-white"></a> <td><a th:href="@{/category/{type}(type=${category?.categoryId})}" th:text="${category?.categoryName}">회원id</a></td></li>
-              <li></li>
+              <ul>
+                <li class="nav-item"><a class="nav-link text-white"></a>
+                  <td><a th:href="@{/category/{categoryId}(categoryId=${category?.categoryId})}" type="button"  th:text="${category.categoryName}" ></a></td></li>
+              </ul>
+
             </tr>
             <!-- Logout    -->
             <li class="nav-item"><a class="nav-link text-white"  th:action="@{/logout}" method="post"> <span class="d-none d-sm-inline">Logout</span>
