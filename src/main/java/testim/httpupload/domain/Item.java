@@ -21,12 +21,15 @@ public class Item {
 
     private String itemType;
 
-    public Item(String itemName, Integer price, Integer quantity, List<UploadFile> imageFiles, String itemType) {
+    private Integer categoryType;
+
+    public Item(String itemName, Integer price, Integer quantity, List<UploadFile> imageFiles, String itemType, Integer categoryType) {
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
         this.imageFiles = imageFiles;
         this.itemType = itemType;
+        this.categoryType = categoryType;
     }
 
     public Item() {

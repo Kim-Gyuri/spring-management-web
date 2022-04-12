@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import testim.httpupload.service.CategoryService;
 import testim.httpupload.service.ItemService;
 import testim.httpupload.validation.form.ItemForm;
 import testim.httpupload.validation.form.ItemUpdateForm;
+
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -48,6 +51,8 @@ public class ItemController {
         itemTypes.add(new ItemType("LOWER", "중"));
         return itemTypes;
     }
+
+    //
 /*
     @GetMapping("/items")
     public String isHome(Pageable pageable, Model model) {
@@ -60,11 +65,16 @@ public class ItemController {
 */
 
     @GetMapping("/items") //home
-    public String isHome(Model model) {
-        List<Item> items = itemService.findAll();
+    public String isHome(Pageable pageable, Model model) {
+       // List<Item> items = itemService.findAll();
         List<ItemCategory> categoryList = categoryService.findAll();
-        model.addAttribute("itemList", items);
+       // model.addAttribute("itemList", items);
         model.addAttribute("categoryList", categoryList);
+
+        Page<Item> itemList = itemService.findItemList(pageable);
+        itemList.stream().forEach(e -> e.getItemName());
+        model.addAttribute("itemList", itemList);
+
         log.info("get! hie");
         return "springform/springitems";
     }
@@ -73,7 +83,9 @@ public class ItemController {
     @GetMapping("/items/table")
     public String ListTable(Model model) {
         List<Item> items = itemService.findAll();
+        List<ItemCategory> categoryList = categoryService.findAll();
         model.addAttribute("items", items);
+        model.addAttribute("categoryList", categoryList);
         return "springform/tables";
     }
 
@@ -94,6 +106,7 @@ public class ItemController {
         item.setQuantity(form.getQuantity());
         item.setImageFiles(uploadFiles);
         item.setItemType(form.getItemType());
+        item.setCategoryType(form.getCategoryType());
         itemService.save(item);
 
         redirectAttributes.addAttribute("itemId", item.getId());
@@ -134,6 +147,7 @@ public class ItemController {
         itemParam.setPrice(form.getPrice());
         itemParam.setItemType(form.getItemType());
         itemParam.setImageFiles(storeImageFiles);
+        itemParam.setCategoryType(form.getCategoryType());
         itemService.update(itemId, itemParam);
 
         return "redirect:/items/{itemId}";

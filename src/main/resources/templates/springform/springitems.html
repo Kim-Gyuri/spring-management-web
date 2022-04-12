@@ -48,14 +48,14 @@
               </svg></a></li>
             <!-- category -->
             <tr th:each="category : ${categoryList}">
-              <ul>
-                <li class="nav-item"><a class="nav-link text-white"></a>
+
+              <li class="nav-item d-flex align-items-center"><a class="nav-link text-white"></a>
                   <td><a th:href="@{/category/{categoryId}(categoryId=${category?.categoryId})}" type="button"  th:text="${category.categoryName}" ></a></td></li>
-              </ul>
+
 
             </tr>
             <!-- Logout    -->
-            <li class="nav-item"><a class="nav-link text-white"  th:action="@{/logout}" method="post"> <span class="d-none d-sm-inline">Logout</span>
+            <li class="nav-item d-flex align-items-center"><a class="nav-link text-white"  th:action="@{/logout}" method="post"> <span class="d-none d-sm-inline">Logout</span>
               <svg class="svg-icon svg-icon-xs svg-icon-heavy" onclick="location.href='/login'" type="submit">
                 <use xlink:href="#security-1"> </use>
               </svg></a></li>
@@ -270,6 +270,24 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </div>
 
+
+<nav aria-label="Page navigation" style="text-align:center;">
+  <ul class="pagination" th:with="startNumber=${T(Math).floor(itemList.number/10)}*10+1,endNumber=(${itemList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${itemList.totalPages}">
+    <li><a aria-label="Previous" href="/items?page=1">&laquo;</a></li>
+    <li th:style="${itemList.first} ? 'display:none'">
+      <a th:href="@{/items(page=${itemList.number})}">&lsaquo;</a>
+    </li>
+
+    <li th:each="page :${#numbers.sequence(startNumber, endNumber)}" th:class="(${page} == ${itemList.number}+1) ? 'active'">
+      <a th:href="@{/items(page=${page})}" th:text="${page}"><span class="sr-only"></span></a>
+    </li>
+
+    <li th:style="${itemList.last} ? 'display:none'">
+      <a th:href="@{/items(page=${itemList.number}+2)}">&rsaquo;</a>
+    </li>
+    <li><a aria-label="Next" th:href="@{/items(page=${itemList.totalPages})}">&raquo;</a></li>
+  </ul>
+</nav>
 
 </body>
 </html>

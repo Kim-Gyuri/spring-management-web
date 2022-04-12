@@ -19,4 +19,6 @@ public class ItemUpdateForm {
     private String itemType;
 
     private List<MultipartFile> imageFiles;
+
+    private Integer categoryType;
 }

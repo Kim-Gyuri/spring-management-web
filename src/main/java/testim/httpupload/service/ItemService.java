@@ -1,5 +1,7 @@
 package testim.httpupload.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import testim.httpupload.domain.Item;
 
 import java.util.List;
@@ -15,6 +17,8 @@ public interface ItemService {
     void update(Long itemId, Item updateParam);
 
     void delete(Long id);
+
+    Page<Item> findItemList(Pageable pageable);
 
 
 }
