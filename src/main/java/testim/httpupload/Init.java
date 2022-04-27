@@ -33,13 +33,14 @@ class TestDataInitDb {
      */
     @PostConstruct
     public void init() {
-        itemService.save(new Item("itemA", 10000, 10, null, "HIGHEST", 0));
-        Item item1 = itemService.save(new Item("itemB", 20000, 20, null, "HIGHEST", 1));
+        Item item1 = itemService.save(new Item("itemA", 10000, 10, null, "HIGHEST", 0));
+        Item item2 = itemService.save(new Item("itemB", 20000, 20, null, "HIGHEST", 1));
 
         categoryService.save(new ItemCategory("book"));
         categoryService.save(new ItemCategory("music"));
 
-        Long order = orderService.order(item1, 3);
+        Long order1 = orderService.order(item1, 3);
+        Long order2 = orderService.order(item2, 10);
 
         initService.initData();
 

@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import testim.httpupload.domain.Item;
 import testim.httpupload.domain.Order;
+import testim.httpupload.domain.OrderItem;
 import testim.httpupload.exception.NotEnoughStockException;
 import testim.httpupload.repository.OrderRepository;
 
@@ -41,9 +42,14 @@ class OrderServiceTest {
         Long save = orderService.order(book, orderCount);
         List<Order> all = orderService.findAll();
         for (Order order1 : all) {
-            System.out.println("order1.getOrderItems().get(0).getItem().getItemName() = " + order1.getOrderItems().get(0).getItem().getItemName());
-            System.out.println("order1.getOrderItems().get(0).getItem().count = " + order1.getOrderItems().get(0).getCount());
-            System.out.println("order1.getOrderItems().size() = " + order1.getOrderItems().size());
+            List<OrderItem> orderItems = order1.getOrderItems();
+            for (OrderItem orderItem : orderItems) {
+                System.out.println("orderItem = " + orderItem.getItem().getItemName());
+            }
+
+            System.out.println("order1.getOrderItems().get(0).getItem().getItemName() = " + orderItems.get(0).getItem().getItemName());
+            System.out.println("order1.getOrderItems().get(0).getItem().count = " + orderItems.get(0).getCount());
+            System.out.println("order1.getOrderItems().size() = " + orderItems.size());
         }
 
     }

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,33 +47,37 @@ public class OrderController {
         log.info("item={}", product.getItemName());
         CartForm cartForm = new CartForm();
         cartForm.setItem(product);
+        log.info("productInfo={}", cartForm.getItem().getItemName());
         model.addAttribute("product", cartForm);
 
         return "product/productInfo";
     }
 
     @PostMapping("/products/{id}")
-    public String getCart(@PathVariable Long id, @ModelAttribute("product") CartForm form) {
+    public String getCart(@ModelAttribute("product") CartForm form, BindingResult errors) {
+        Item product = form.getItem();
+        int count = form.getCount();
+        orderService.order(product, count);
+        log.info("get order Post!");
+        if (errors.hasErrors()) {
+            log.error(errors.getAllErrors().toString());
+        }
 
-        Long order = orderService.order(form.getItem(), form.getCount());
 
-        Order getOrder = orderService.findById(order);
-        log.info("getOrder={}", getOrder.getOrderItems().size());
-
-        return "redirect:/carts";
+        return "redirect:/cartList";
     }
 
 
-    @GetMapping("/carts")
+    @GetMapping("/cartList")
     public String orderList(Model model) {
-        List<Order> carts = orderService.findAll();
-        for (Order cart : carts) {
+        List<Order> product = orderService.findAll();
+        model.addAttribute("product", product);
+        for (Order cart : product) {
             System.out.println("order1.getOrderItems().get(0).getItem().getItemName() = " + cart.getOrderItems().get(0).getItem().getItemName());
             System.out.println("order1.getOrderItems().get(0).getItem().count = " + cart.getOrderItems().get(0).getCount());
             System.out.println("order1.getOrderItems().size() = " + cart.getOrderItems().size());
             System.out.println("cart = " + cart.getOrderItems().size());
         }
-        model.addAttribute("carts", carts);
         return "cart/cart";
     }
 
