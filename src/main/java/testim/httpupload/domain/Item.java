@@ -2,8 +2,12 @@ package testim.httpupload.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import testim.httpupload.exception.NotEnoughStockException;
 
-import javax.persistence.*;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.List;
 
 @Entity
@@ -36,5 +40,25 @@ public class Item {
 
     }
 
+
+
+        //==비지니스 로직==//
+    /*
+    stock 증가
+     */
+    public void addStock(int quantity) {
+        this.quantity += quantity;
+    }
+
+    /*
+    stock 감소
+     */
+    public void removeStock(int quantity) {
+        int restQuantity = this.quantity - quantity;
+        if (restQuantity < 0) {
+            throw new NotEnoughStockException("need more stock");
+        }
+        this.quantity = restQuantity;
+    }
 
 }
