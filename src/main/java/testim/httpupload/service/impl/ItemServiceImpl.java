@@ -31,7 +31,6 @@ public class ItemServiceImpl implements ItemService {
     private final Map<Long, Item> store = new HashMap<>();
     private long sequence = 0L;
 
-
     @Override
     public List<Item> findAll() {
         return new ArrayList<>(store.values());
@@ -69,7 +68,7 @@ public class ItemServiceImpl implements ItemService {
     public Page<Item> findItemList(Pageable pageable) {
         pageable = PageRequest.of(
                 pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber()-1,
-               10);
+                10);
         return itemRepository.findAll(pageable);
     }
 }

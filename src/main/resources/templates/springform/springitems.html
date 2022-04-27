@@ -51,12 +51,10 @@
 
               <li class="nav-item d-flex align-items-center"><a class="nav-link text-white"></a>
                   <td><a th:href="@{/category/{categoryId}(categoryId=${category?.categoryId})}" type="button"  th:text="${category.categoryName}" ></a></td></li>
-
-
             </tr>
+
             <!-- Logout    -->
-            <li class="nav-item d-flex align-items-center"><a class="nav-link text-white"  th:action="@{/logout}" method="post"> <span class="d-none d-sm-inline">Logout</span>
-              <svg class="svg-icon svg-icon-xs svg-icon-heavy" onclick="location.href='/login'" type="submit">
+            <li class="nav-item d-flex align-items-center"><a class="nav-link text-white"  th:href="@{/register}" type="button">SignUP
                 <use xlink:href="#security-1"> </use>
               </svg></a></li>
           </ul>
@@ -215,7 +213,7 @@
                   <td class="col-sm-9">
                     <img th:each="imageFile : ${item.imageFiles}" th:src="|/images/${imageFile.getStoreFileName()}|" width="300" height="300"/>
                   </td>
-                  <td th:text="${item.itemName}"></td>
+                  <td><a href="springitem.html" th:href="@{/products/{id}(id=${item.id})}" th:text="${item.itemName}">상품명</a></td>
                   <td th:text="${item.itemType}"></td>
                   <td th:text="${item.price}"></td>
 

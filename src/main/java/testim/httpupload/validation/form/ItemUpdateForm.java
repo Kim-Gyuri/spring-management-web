@@ -8,17 +8,17 @@ import java.util.List;
 @Data
 public class ItemUpdateForm {
 
-    private Long id;
+    private long id;
 
     private String itemName;
-
     private Integer price;
-
     private Integer quantity;
-
-    private String itemType;
 
     private List<MultipartFile> imageFiles;
 
+    private String itemType;
+
     private Integer categoryType;
+
+
 }
