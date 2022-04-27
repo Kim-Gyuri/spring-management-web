@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<h1 align="center" class="display-4 mb-5">My Cart</h1>
+
+<!--Cart Detail Table-->
+<table class="table table-striped text-center">
+    <thead>
+    <tr>
+        <th scope="col">Photo</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">count</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="cart : ${carts}">
+        <th class="align-middle" scope="row">
+            <a><img height="100px" width="100px" th:each="imageFile : ${cart.orderItems[0].item.imageFiles}" th:src="|/images/${imageFile.getStoreFileName()}|" ></a>
+        </th>
+
+        <td class="align-middle" th:text="${cart.orderItems[0].item.itemName}"></td>
+        <td class="align-middle" th:text="${cart.orderItems[0].item.price}"></td>
+        <td class="align-middle" th:text="${cart.orderItems[0].count}"></td>
+
+
+    </tr>
+
+    </tbody>
+</table>
+    <div>
+        <h5 style="display: inline;"></h5>
+        <button class="btn btn-warning float-right">Checkout</button>
+    </div>
+
+</head>
+</html>
