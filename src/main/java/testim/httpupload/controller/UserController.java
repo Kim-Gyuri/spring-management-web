@@ -5,15 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import testim.httpupload.domain.Address;
 import testim.httpupload.domain.User;
-import testim.httpupload.service.UserService;
+import testim.httpupload.repository.UserRepository;
 
 @Controller
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @GetMapping("/register")
     public String registerForm(Model model) {
@@ -22,15 +21,10 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(UserForm form) {
+    public String register(User user) {
 
-        Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
-
-        User user = new User();
-        user.setName(form.getName());
-        user.setAddress(address);
-
-        userService.join(user);
+ //       Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
+        userRepository.save(user);
         return "redirect:/items";
     }
 

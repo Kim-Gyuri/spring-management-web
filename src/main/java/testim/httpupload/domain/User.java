@@ -16,6 +16,9 @@ public class User {
     @Id @GeneratedValue
     private long id;
 
+    private String loginId;
+    private String password;
+
     private String name;
 
     private String email;
@@ -26,5 +29,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
 
+
+    public User(String loginId, String password, String name) {
+        this.loginId = loginId;
+        this.password = password;
+        this.name = name;
+    }
 
 }

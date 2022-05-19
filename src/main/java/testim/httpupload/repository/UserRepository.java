@@ -1,34 +1,49 @@
 package testim.httpupload.repository;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import testim.httpupload.domain.User;
 
-import javax.persistence.EntityManager;
-import java.util.List;
+import java.util.*;
 
+@Slf4j
 @Repository
-@RequiredArgsConstructor
 public class UserRepository {
 
-    private final EntityManager em;
+    private static Map<Long, User> store = new HashMap<>(); //static 사ㅛㅇ
+    private static long sequence = 0L;
 
-    public void save(User user) {
-        em.persist(user);
+    public User save(User member) {
+        member.setId(++sequence);
+        log.info("save: member={}", member);
+        store.put(member.getId(), member);
+        return member;
     }
 
-    public User findOne(Long id) {
-        return em.find(User.class, id);
+    public User findById(Long id) {
+        return store.get(id);
+    }
+
+    public Optional<User> findByLoginId(String loginId) {
+        /*
+        List<Member> all = findAll();
+        for (Member m : all) {
+            if (m.getLoginId().equals(loginId)) {
+                return Optional.of(m);
+            }
+        }
+        return Optional.empty();
+        */
+        return findAll().stream()
+                .filter(u -> u.getLoginId().equals(loginId))
+                .findFirst();
     }
 
     public List<User> findAll() {
-        return em.createQuery("select u from User u",  User.class)
-                .getResultList();
+        return new ArrayList<>(store.values());
     }
 
-    public List<User> findByName(String name) {
-        return em.createQuery("select u from User u where u.name = :name", User.class)
-                .setParameter("name", name)
-                .getResultList();
+    public void clearStore() {
+        store.clear();
     }
 }

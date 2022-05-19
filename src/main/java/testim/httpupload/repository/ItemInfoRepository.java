@@ -6,6 +6,7 @@ import testim.httpupload.domain.Item;
 
 @Repository
 public interface ItemInfoRepository extends JpaRepository<Item, Long> {
+
 /*
     Item findByProductId(String id);
     // onsale product
