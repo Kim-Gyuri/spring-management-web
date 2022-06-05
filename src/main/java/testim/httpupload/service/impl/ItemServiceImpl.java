@@ -71,4 +71,10 @@ public class ItemServiceImpl implements ItemService {
                 10);
         return itemRepository.findAll(pageable);
     }
+
+
+    @Override
+    public List<Item> findItems() {
+        return itemRepository.findAll();
+    }
 }

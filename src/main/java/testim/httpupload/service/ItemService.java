@@ -20,6 +20,7 @@ public interface ItemService {
 
     Page<Item> findItemList(Pageable pageable);
 
+    List<Item> findItems();
 
 
 }

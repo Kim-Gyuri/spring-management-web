@@ -66,16 +66,14 @@ public class ItemController {
 
     @GetMapping("/items") //home
     public String isHome(Pageable pageable, Model model) {
-       // List<Item> items = itemService.findAll();
+
         List<ItemCategory> categoryList = categoryService.findAll();
-       // model.addAttribute("itemList", items);
         model.addAttribute("categoryList", categoryList);
 
         Page<Item> itemList = itemService.findItemList(pageable);
         itemList.stream().forEach(e -> e.getItemName());
         model.addAttribute("itemList", itemList);
 
-        log.info("get! hie");
         return "springform/springitems";
     }
 
@@ -86,6 +84,8 @@ public class ItemController {
         List<ItemCategory> categoryList = categoryService.findAll();
         model.addAttribute("items", items);
         model.addAttribute("categoryList", categoryList);
+
+        log.info("해당 제품명{} 해당 재고량{}", items.get(0).getItemName(), items.get(0).getQuantity());
         return "springform/tables";
     }
 

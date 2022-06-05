@@ -43,12 +43,22 @@ public class OrderController {
 
     @GetMapping("/products/{id}")
     public String items(@PathVariable Long id, Model model) {
+
+        List<Item> items = itemService.findItems();
+        model.addAttribute("items", items);
+
         Item product = itemService.findById(id);
-        log.info("item={}", product.getItemName());
+
         CartForm cartForm = new CartForm();
+
         cartForm.setItem(product);
+        
+        log.info("item={}", product.getItemName());
         log.info("productInfo={}", cartForm.getItem().getItemName());
+        log.info("items={}확인해보자.",product.getQuantity());
+
         model.addAttribute("product", cartForm);
+
 
         return "product/productInfo";
     }
@@ -57,8 +67,16 @@ public class OrderController {
     public String getCart(@ModelAttribute("product") CartForm form, BindingResult errors) {
         Item product = form.getItem();
         int count = form.getCount();
-        orderService.order(product, count);
-        log.info("get order Post!");
+        Long orderId = orderService.order(product, count);
+
+        log.info("orderQuantity={}", form.getCount());
+        log.info("남아있는 재고량={}", product.getQuantity());
+
+         //  Order order = orderService.findById(orderId);
+        //   List<OrderItem> orderItems = order.getOrderItems();
+       //    log.info("stockQuantity={}",orderItems.get(0).getItem().getQuantity());
+      //     log.info("itemId={}", orderItems.get(0).getItem().getId());
+
         if (errors.hasErrors()) {
             log.error(errors.getAllErrors().toString());
         }
@@ -73,10 +91,10 @@ public class OrderController {
         List<Order> product = orderService.findAll();
         model.addAttribute("product", product);
         for (Order cart : product) {
-            System.out.println("order1.getOrderItems().get(0).getItem().getItemName() = " + cart.getOrderItems().get(0).getItem().getItemName());
-            System.out.println("order1.getOrderItems().get(0).getItem().count = " + cart.getOrderItems().get(0).getCount());
-            System.out.println("order1.getOrderItems().size() = " + cart.getOrderItems().size());
-            System.out.println("cart = " + cart.getOrderItems().size());
+            log.info("order1.getOrderItems().get(0).getItem().getItemName() = {}", cart.getOrderItems().get(0).getItem().getItemName());
+            log.info("order1.getOrderItems().get(0).getItem().count = {}", cart.getOrderItems().get(0).getCount());
+            log.info("order1.getOrderItems().size() = {}", cart.getOrderItems().size());
+            log.info("cart = {} ", cart.getOrderItems().size());
         }
         return "cart/cart";
     }

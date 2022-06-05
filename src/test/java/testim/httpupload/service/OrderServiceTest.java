@@ -1,5 +1,6 @@
 package testim.httpupload.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +15,6 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @SpringBootTest
 @Transactional
@@ -66,15 +66,9 @@ class OrderServiceTest {
         //when
         Long orderId = orderService.order( book, orderCount);
 
-        //then
-
-        //Order getOrder = orderRepository.findOne(orderId);
-        Order getOrder = orderService.findById(orderId);
-
-        //     assertEquals("상품 주문시 상태는 ORDER", OrderStatus.ORDER, getOrder.getStatus());
-        System.out.println("getOrder = " + getOrder.getOrderItems().size());
-        assertEquals("주문한 상품 종류 수가 정확해야 한다.", 1, getOrder.getOrderItems().size());
-
+        Order order = orderService.findById(orderId);
+        System.out.println("book.getQuantity() = " + book.getQuantity());
+        Assertions.assertEquals( 8, book.getQuantity());
     }
 
     @Test

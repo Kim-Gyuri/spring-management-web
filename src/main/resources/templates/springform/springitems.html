@@ -206,6 +206,7 @@
                   <th scope="col">상품명</th>
                   <th scope="col">상품등급</th>
                   <th scope="col">가격</th>
+                  <th scope="col">수량</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -216,6 +217,7 @@
                   <td><a href="springitem.html" th:href="@{/products/{id}(id=${item.id})}" th:text="${item.itemName}">상품명</a></td>
                   <td th:text="${item.itemType}"></td>
                   <td th:text="${item.price}"></td>
+                  <td th:text="${item.quantity}"></td>
 
                 </tr>
                 </tbody>

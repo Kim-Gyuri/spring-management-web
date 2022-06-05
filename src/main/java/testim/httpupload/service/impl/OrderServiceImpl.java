@@ -1,13 +1,13 @@
 package testim.httpupload.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import testim.httpupload.domain.Item;
 import testim.httpupload.domain.Order;
 import testim.httpupload.domain.OrderItem;
 import testim.httpupload.repository.ItemRepository;
-import testim.httpupload.repository.UserRepository;
-import testim.httpupload.service.ItemService;
+import testim.httpupload.repository.OrderRepository;
 import testim.httpupload.service.OrderService;
 
 import java.util.ArrayList;
@@ -15,17 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    ItemService itemService;
+    OrderRepository orderRepository;
 
     @Autowired
     ItemRepository itemRepository;
-
-    @Autowired
-    UserRepository userRepository;
 
     private final Map<Long, Order> store = new HashMap<>();
     private long sequence = 0L;
@@ -50,7 +48,8 @@ public class OrderServiceImpl implements OrderService {
         Order order = Order.createOrder(orderItem);
 
         save(order);
-        System.out.println("order = " + order.getOrderItems());
+        log.info("주문 후 남은 재고량={}", item.getQuantity());
+        log.info("order={}", order.getOrderItems().get(0).getItem().getQuantity());
 
         return order.getId();
     }
